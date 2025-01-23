@@ -39,8 +39,8 @@ jobs:
       - run: CI=true npm test
         working-directory: starter/frontend
 
-  build:
-    name: Build image
+  deploy:
+    name: Deploys Frontend
     runs-on: ubuntu-latest
     needs: [lint, test]
     defaults:

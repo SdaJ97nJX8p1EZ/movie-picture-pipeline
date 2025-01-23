@@ -64,7 +64,7 @@ jobs:
           docker push ${{ secrets.BACKEND_URL }}:${GITHUB_SHA::7}
       - run: aws eks update-kubeconfig --name cluster --region us-east-1
       - run: |
-          cd k8s
           kustomize edit set image backend=${{ secrets.BACKEND_URL }}:${GITHUB_SHA::7}
           kustomize build | kubectl apply -f -
+        working-directory: starter/backend/k8s
 

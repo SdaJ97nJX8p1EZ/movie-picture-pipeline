@@ -56,6 +56,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ARN }}
           aws-region: us-east-1
       - uses: aws-actions/amazon-ecr-login@v1
       - run: |
@@ -64,7 +65,8 @@ jobs:
           docker push ${{ secrets.BACKEND_URL }}:${GITHUB_SHA::7}
       - run: aws eks update-kubeconfig --name cluster --region us-east-1
       - run: |
+          kubectl version
           kustomize edit set image backend=${{ secrets.BACKEND_URL }}:${GITHUB_SHA::7}
-          kustomize build | kubectl apply -f -
+          kustomize build | kubectl apply -f - 
         working-directory: starter/backend/k8s
 

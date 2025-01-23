@@ -1,7 +1,7 @@
-name: Frontend CD
+name: Frontend Continious Deployment
 
 on:
-  pull_request:
+  push:
     branches:
       - main
     paths:
@@ -61,7 +61,7 @@ jobs:
           aws-region: us-east-1
       - uses: aws-actions/amazon-ecr-login@v1
       - run: |
-          docker build --build-arg REACT_APP_MOVIE_API_URL=${{ secrets.BACKEND_URL }} -t frontend:${GITHUB_SHA::7} .
+          docker build --build-arg REACT_APP_MOVIE_API_URL=${{ secrets.REACT_APP_MOVIE_API_URL }} -t frontend:${GITHUB_SHA::7} .
           docker tag frontend:${GITHUB_SHA::7} ${{ secrets.FRONTEND_URL }}:${GITHUB_SHA::7}
           docker push ${{ secrets.FRONTEND_URL }}:${GITHUB_SHA::7}
       - run: aws eks update-kubeconfig --name cluster --region us-east-1

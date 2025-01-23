@@ -21,7 +21,7 @@ jobs:
           cache-dependency-path: starter/frontend/package-lock.json
       - run: npm ci
         working-directory: starter/frontend
-      - run: npm lint
+      - run: npm run lint
         working-directory: starter/frontend
 
   test:

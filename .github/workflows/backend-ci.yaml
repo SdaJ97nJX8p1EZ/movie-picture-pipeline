@@ -51,5 +51,5 @@ jobs:
         working-directory: starter/backend
       - run: pipenv run test
         working-directory: starter/backend
-      - run: docker build --tag=mp-backend:latest .
+      - run: docker build --tag=backend:latest .
         working-directory: starter/backend
